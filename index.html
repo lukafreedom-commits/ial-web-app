@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <video autoplay muted loop id="myVideo" class="video-bg">
+        <source src="./assets/video/weather-bkg-video.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+
+        <div class="search-container">
+            <h1>Weather App</h1>
+            <input type="text" id="cityField" placeholder="Enter city name" class="input-field">
+            <button id="submitBtn" class="submit-btn">Search</button>
+        </div>
+
+        <div id="loading" class="loading hidden">Loading...</div>
+        
+        <div id="resultContainer" class="result-container hidden">
+            <h2 id="cityName"></h2>
+            <div id="weatherIcon" class="weather-icon"></div>
+            <p id="temperature"></p>
+            <p id="condition"></p>
+            <p id="windSpeed"></p>
+        </div>
+
+        <span id="errorMessage" class="error-message"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
