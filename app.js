@@ -55,12 +55,28 @@ function getWeatherIcon(code) {
     return weatherIcons[code] || 'fa-question';
 }
 
-searchBtn.addEventListener("click", async () => {
+searchBtn.addEventListener("click"), async () => {
     const city = cityField.value.trim();
     if (!city) {
         errorMessage.textContent = "Per favore, inserisci una città.";
         return;
     }
+     }
+
+     // Simple client-side rate-limit and debounce (prevent rapid repeated clicks)
+let lastSearch = 0;
+const MIN_SEARCH_INTERVAL = 3000; // ms
+
+searchBtn.addEventListener("click", async () => {
+  const now = Date.now();
+  if (now - lastSearch < MIN_SEARCH_INTERVAL) {
+    errorMessage.textContent = "Attendi alcuni secondi prima di effettuare una nuova ricerca.";
+    return;
+  }
+  lastSearch = now;
+
+  const rawCity = cityField.value || "";
+  const city = rawCity.trim();
 
     showLoading();
 
