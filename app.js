@@ -9,6 +9,7 @@ const loading = document.getElementById("loading");
 const resultContainer = document.getElementById("resultContainer");
 const weatherIcon = document.getElementById("weatherIcon");
 
+
 const apiUrl = "https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true";
 
 function showLoading() {
@@ -61,11 +62,11 @@ searchBtn.addEventListener("click"), async () => {
         errorMessage.textContent = "Per favore, inserisci una città.";
         return;
     }
-     }
 
-     // Simple client-side rate-limit and debounce (prevent rapid repeated clicks)
+       // Simple client-side rate-limit and debounce (prevent rapid repeated clicks)
 let lastSearch = 0;
 const MIN_SEARCH_INTERVAL = 3000; // ms
+
 
 searchBtn.addEventListener("click", async () => {
   const now = Date.now();
@@ -75,12 +76,19 @@ searchBtn.addEventListener("click", async () => {
   }
   lastSearch = now;
 
-  const rawCity = cityField.value || "";
+   const rawCity = cityField.value || "";
   const city = rawCity.trim();
 
-    showLoading();
+    // Basic input validation: only letters, spaces, hyphen and apostrophe, max 50 chars
+  const cityRegex = /^[\p{L}\s\-']{1,50}$/u;
+  if (!cityRegex.test(city)) {
+    errorMessage.textContent = "Nome città non valido. Usa solo lettere e spazi (max 50).";
+    return;
+  }
 
-    try {
+ showLoading();
+
+ try {
         const response = await fetch(`https://geocode.xyz/${city}?json=1`);
         const data = await response.json();
         if (data.error) {
@@ -89,7 +97,7 @@ searchBtn.addEventListener("click", async () => {
             return;
         }
 
-        const { latt, longt } = data;
+  const { latt, longt } = data;
         const weatherResponse = await fetch(apiUrl.replace("{lat}", latt).replace("{lon}", longt));
         const weatherData = await weatherResponse.json();
 
@@ -102,6 +110,17 @@ searchBtn.addEventListener("click", async () => {
         hideLoading();
         showResults();
 
+
+
+
+ 
+
+
+
+ 
+   
+   
+      
         const weatherCode = weatherData.current_weather.weathercode;
         const iconClass = getWeatherIcon(weatherCode);
 
